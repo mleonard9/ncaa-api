@@ -1,0 +1,17 @@
+version: 1.0
+runtime: nodejs18
+build:
+  commands:
+    # Download and install Bun into the project directory so it persists to the run phase
+    - curl -fsSL https://bun.sh/install | BUN_INSTALL=./.bun bash
+    # Add Bun to PATH for this build session
+    - export PATH="./.bun/bin:$PATH"
+    # Install dependencies
+    - bun install --production
+run:
+  # Start the app using the locally installed Bun binary
+  command: ./.bun/bin/bun src/index.ts
+  network:
+    port: 3000
+    env:
+      NODE_ENV: production
